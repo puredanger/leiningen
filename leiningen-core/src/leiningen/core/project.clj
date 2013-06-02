@@ -464,8 +464,11 @@
   [project]
   (warn-user-repos (concat (user/profiles) (system-profiles)))
   (warn-user-profile (:profiles project))
-  (merge @default-profiles (system-profiles) (user/profiles)
-         (:profiles project) (project-profiles project)))
+  (merge @default-profiles
+         (eval (unquote-project (system-profiles)))
+         (eval (unquote-project (user/profiles)))
+         (:profiles project)
+         (eval (unquote-project (project-profiles project)))))
 
 ;; # Lower-level profile plumbing: loading plugins, hooks, middleware, certs
 
